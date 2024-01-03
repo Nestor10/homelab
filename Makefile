@@ -11,5 +11,5 @@ create_secrets:
 secrets:
 	ansible-vault edit --vault-password-file secret.txt vars/pia.yaml
 
-torrent:
-	ansible-playbook --vault-password-file secret.txt -i inventory.yaml playbooks/torrent.yaml
+quadlet:
+	ansible-playbook --vault-password-file secret.txt -i inventory.yaml playbooks/quadlet.yaml
