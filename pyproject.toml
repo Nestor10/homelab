@@ -29,11 +29,10 @@ classifiers = [
 ]
 
 dependencies = [ 
-  "ansible"
 ]
 
 [project.optional-dependencies]
-dev = ["check-manifest", "ansible"]
+dev = ["check-manifest", "ansible", "ansible-lint"]
 test = ["coverage"]
 
 # This is configuration specific to the `setuptools` build backend.

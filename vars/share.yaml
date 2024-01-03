@@ -1,0 +1,7 @@
+    share_root_directory: /share
+    media_directory: "{{ share_root_directory }}/media"
+    torrent_directory: "{{ share_root_directory }}/torrent"
+    torrent_config: "{{ share_root_directory }}/torrent_config"
+    jellyfin_root_directory: "{{ share_root_directory }}/jellyfin"
+    jellyfin_cache: "{{ jellyfin_root_directory }}/cache"
+    jellyfin_config: "{{ jellyfin_root_directory }}/config"

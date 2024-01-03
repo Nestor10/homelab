@@ -1,0 +1,44 @@
+- name: jellyfin install
+  hosts: mini_crow
+  # roles:
+  #   - {role: podman, become: true}
+  # vars:
+  tasks:
+    - name: Include vars
+      ansible.builtin.include_vars:
+        dir: ../vars
+        depth: 1
+    - name: include role
+      ansible.builtin.include_role:
+        name: "../roles/podman"
+        apply: 
+          become: true
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0775'
+      loop:
+        - "{{ jellyfin_root_directory }}"
+        - "{{ jellyfin_cache }}"
+        - "{{ jellyfin_config }}"
+        - "{{ media_directory }}"
+        - "{{ torrent_directory }}"
+        - "{{ torrent_config }}"
+
+
+    - name: Deploy serivice
+      ansible.builtin.include_tasks:
+        file: ../tasks/service.yml
+      loop: "{{ services }}"
+      loop_control:
+        loop_var: service_name
+      
+    
+    - name: reload systemd daemon 
+      ansible.builtin.systemd_service:
+        scope: user
+        daemon_reload: true 
+      when: 
+        templates.changed

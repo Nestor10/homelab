@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: syncthing
+  name: syncthing
+spec:
+  automountServiceAccountToken: false
+  containers:
+  - env:
+    - name: STHOMEDIR
+      value: /var/syncthing/syncthing/config
+    image: docker.io/syncthing/syncthing:latest
+    name: syncthing
+    ports:
+    - containerPort: 8384
+      hostPort: 8384
+    - containerPort: 22000
+      hostPort: 22000
+      protocol: TCP
+    - containerPort: 22000
+      hostPort: 22000
+      protocol: UDP
+    - containerPort: 21027
+      hostPort: 21027
+      protocol: UDP
+    command: ["/bin/syncthing"]
+    args: []
+    securityContext:
+      capabilities:
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+    volumeMounts:
+    - mountPath: /var/syncthing
+      name: share-host-0
+  enableServiceLinks: false
+  volumes:
+  - hostPath:
+      path: {{ share_root_directory }}
+      type: Directory
+    name: share-host-0

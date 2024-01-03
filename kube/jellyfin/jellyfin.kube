@@ -1,0 +1,20 @@
+[Unit]
+Description=This is jellyfin, bro!
+
+[Kube]
+Yaml=jellyfin.yml
+ConfigMap=config.map
+AutoUpdate=registry
+LogDriver=journald
+PodmanArgs=--annotation=io.kubernetes.cri-o.TTY/jellyfin=false
+PodmanArgs=--annotation=io.podman.annotations.autoremove/jellyfin=TRUE
+PodmanArgs=--annotation=io.podman.annotations.init/jellyfin=FALSE
+PodmanArgs=--annotation=io.podman.annotations.privileged/jellyfin=FALSE
+PodmanArgs=--annotation=io.podman.annotations.publish-all/jellyfin=FALSE
+
+[Service]
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target

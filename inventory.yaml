@@ -1,0 +1,5 @@
+mini_crow:
+  hosts:
+    node1:
+      ansible_host: node1
+      ansible_user: node1

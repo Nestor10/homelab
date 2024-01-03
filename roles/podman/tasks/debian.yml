@@ -1,0 +1,35 @@
+- name: Check all users for lingering
+  ansible.builtin.include_tasks:
+    file: lingering.yml
+  loop:
+    - "{{ ansible_user_id }}"
+  loop_control:
+    loop_var: name
+
+- name: add default release 
+  ansible.builtin.copy: 
+    src: ../files/99defaultRelease 
+    dest: /etc/apt/apt.conf.d/99defaultRelease
+
+- name: add testing release
+  ansible.builtin.copy: 
+    src: ../files/testing.list 
+    dest: /etc/apt/sources.list.d/testing.list
+
+- name: Update apt packages
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: apt-get install
+  ansible.builtin.apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    default_release: "{{ item.release }}"
+  loop: "{{ _apt }}"
+  register: result
+  until: result is succeeded
+  notify:
+    - podman | system rest
+    - podman | systemctl restart podman.service
+

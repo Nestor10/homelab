@@ -1,0 +1,33 @@
+[Unit]
+Description=This is transmission, bro!
+
+[Container]
+ContainerName=transmission
+Image=docker.io/haugene/transmission-openvpn
+AddDevice=/dev/net/tun
+AddCapability=CAP_NET_ADMIN
+AddCapability=CAP_MKNOD
+Environment=OPENVPN_CONFIG={{ torrent_settings.vpn_region }}
+Environment=OPENVPN_USERNAME={{ torrent_settings.vpn_username }}
+Environment=OPENVPN_PASSWORD={{ torrent_settings.vpn_password }}
+Environment=OPENVPN_PROVIDER={{ torrent_settings.vpn_provider }}
+Environment=LOCAL_NETWORK={{ torrent_settings.local_network }}
+Environment=VPN_INPUT_PORTS={{ torrent_settings.input_ports }}
+Environment=VPN_OUTPUT_PORTS={{ torrent_settings.output_ports }}
+Environment=DEBUG=false
+Environment=CREATE_TUN_DEVICE=false
+
+{%- for ports in torrent_settings.ports %}
+
+PublishPort={{ ports -}}
+
+{% endfor %}
+
+Volume={{ torrent_directory }}:/data
+Volume={{ torrent_config }}:/config
+[Service]
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target
