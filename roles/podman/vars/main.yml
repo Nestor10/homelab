@@ -1,0 +1,5 @@
+---
+# vars file for podman
+
+share_root_directory: /share
+quadlet_user_directory: "{{ ansible_user_dir }}/.config/containers/systemd/"

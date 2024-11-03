@@ -1,0 +1,36 @@
+[Unit]
+Description=This is Jellyfin, bro!
+
+[Container]
+ContainerName=jellyfin
+Image=docker.io/jellyfin/jellyfin:latest
+
+AddDevice=dri 
+AddDevice=dma_heap
+AddDevice=mali0
+AddDevice=rga
+AddDevice=mpp_service
+AddDevice=iep
+AddDevice=mpp-service
+AddDevice=vpu_service
+AddDevice=vpu-service
+AddDevice=hevc_service
+AddDevice=hevc-service
+AddDevice=rkvdec
+AddDevice=rkvenc
+AddDevice=vepu
+AddDevice=h265e
+
+PublishPort=8096:8096
+
+
+Volume={{ jellyfin_cache }}:/cache
+Volume={{ jellyfin_config }}:/config
+Volume={{ media_directory }}:/media
+
+[Service]
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target

@@ -1,0 +1,13 @@
+- name: Create service directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/containers/systemd/{{ service_name }}"
+    state: directory
+    mode: '775'
+
+- name: Template out each file that matches the given pattern
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ ansible_user_dir }}/.config/containers/systemd/{{ service_name }}/{{ item | basename}}"
+  with_fileglob:
+    - "../kube/{{ service_name }}/*"
+  register: templates

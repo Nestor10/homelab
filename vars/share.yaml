@@ -1,0 +1,13 @@
+    share_root_directory: /share
+    media_directory: "{{ share_root_directory }}/media"
+    torrent_directory: "{{ share_root_directory }}/torrent"
+    torrent_config: "{{ share_root_directory }}/torrent_config"
+    jellyfin_root_directory: "{{ share_root_directory }}/jellyfin"
+    jellyfin_cache: "{{ jellyfin_root_directory }}/cache"
+    jellyfin_config: "{{ jellyfin_root_directory }}/config"
+    rancher_persistance: "{{ ansible_user_dir }}/.rancher"
+    tdarr_root_dir: "{{ share_root_directory }}/tdarr"
+    tdarr_server_dir: "{{ tdarr_root_dir }}/app"
+    tdarr_config_dir: "{{ tdarr_root_dir }}/conf"
+    tdarr_logs_dir: "{{ tdarr_root_dir }}/logs"
+    tdarr_cache_dir: "{{ tdarr_root_dir }}/cache"
