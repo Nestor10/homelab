@@ -5,6 +5,7 @@ _apt:
   - { release: "testing", state: "latest", name: "uidmap" }
   - { release: "testing", state: "latest", name: "catatonit" }
   - { release: "testing", state: "latest", name: "slirp4netns" }
+  - { release: "testing", state: "latest", name: "passt" }
   - { release: "bookworm", state: "latest", name: "aardvark-dns"}
   - { release: "bookworm", state: "latest", name: "netavark"}
   - { release: "bookworm", state: "latest", name: "acl"}
